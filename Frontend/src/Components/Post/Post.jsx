@@ -9,7 +9,7 @@ const Post = () => {
             try {
                 await axios({
                     method: 'GET',
-                    url: `/v1`,
+                    url: `products/v1 `,
                 }).then((res) => {
                     const filteredData = res.data.slice(4);
                     setProductPic(filteredData)

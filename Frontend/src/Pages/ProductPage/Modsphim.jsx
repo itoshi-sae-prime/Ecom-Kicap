@@ -1,5 +1,5 @@
 import ProductList from "./ProductList";
 const ModsPage = (props) => {
-    return <ProductList apiUrl={`/api/products/modsphim`} />;
+    return <ProductList apiUrl={`products/modsphim`} />;
 };
 export default ModsPage;

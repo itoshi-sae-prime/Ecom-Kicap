@@ -7,7 +7,7 @@ const TinTuc = () => {
             try {
                 await axios({
                     method: 'GET',
-                    url: `/blog`,
+                    url: `posts/blog`,
                 }).then((res) => {
                     setProductPic(res.data)
                     console.log(res.data)
