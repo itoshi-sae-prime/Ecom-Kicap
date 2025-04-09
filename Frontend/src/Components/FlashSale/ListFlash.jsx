@@ -73,7 +73,7 @@ const ListFlash = () => {
                 spaceBetween={10}
                 slidesPerView={2}
                 breakpoints={{
-                    480: { slidesPerView: 1 },
+                    480: { slidesPerView: 2 },
                     640: { slidesPerView: 2 },
                     1024: { slidesPerView: 3 },
                     1280: { slidesPerView: 4 },

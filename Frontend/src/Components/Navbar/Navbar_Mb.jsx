@@ -3,14 +3,15 @@ import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5"; // Icon đóng menu
 import { IoMdArrowDropdown } from "react-icons/io";
+import { Data1 } from '../../data/Navbar'
 import "../Navbar/navbar.css";
 const NavbarMB = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDropdown, setIsDropdown] = useState(false);
+    console.log(Data1);
     return (
         <nav>
             <div className="lg:hidden">
-
                 <button onClick={() => setIsOpen(true)} className="text-[30px]">
                     <IoMdMenu />
                 </button>

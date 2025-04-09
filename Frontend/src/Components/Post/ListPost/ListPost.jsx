@@ -12,16 +12,14 @@ const ListPost = ({ data, title }) => {
                 <Swiper
                     grabCursor={true}
                     spaceBetween={10}
-                    slidesPerView={4}
                     breakpoints={{
-                        480: { slidesPerView: 2 },
+                        430: { slidesPerView: 2 },
                         640: { slidesPerView: 3 }, // Hiển thị 2 sản phẩm từ 640px trở lên
                         1024: { slidesPerView: 4 } // Hiển thị 4 sản phẩm từ 1024px trở lên
-
                     }}
                     loop={false}
                     speed={1000}
-                    // autoplay={{ delay: 3000, disableOnInteraction: false }}
+                    autoplay={{ delay: 1000, disableOnInteraction: false }}
                     // pagination={{ clickable: true }}
                     modules={[Pagination, Autoplay]}
                 >

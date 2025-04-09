@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { addCard } from "../../Redux/Slice/cardSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 const Card = ({ data, sizeImg }) => {
     const [isHovered, setIsHovered] = useState(false);
     const dispatch = useDispatch();
@@ -29,13 +30,15 @@ const Card = ({ data, sizeImg }) => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-                <div className={`${sizeImg} flex justify-center datas-center overflow-hidden rounded-xl `}>
-                    <img
-                        src={isHovered ? data.images[4] : data.images[0]}
-                        alt={data.title || "Sản phẩm"}
-                        className="object-cover w-full h-full transition-all  duration-500 ease-in-out transform hover:scale-105"
-                    />
-                </div>
+                <Link to={`/product/${data.id}`} className="block">
+                    <div className={`${sizeImg} flex justify-center datas-center overflow-hidden rounded-xl `}>
+                        <img
+                            src={isHovered ? data.images[4] : data.images[0]}
+                            alt={data.title || "Sản phẩm"}
+                            className="object-cover w-full h-full transition-all  duration-500 ease-in-out transform hover:scale-105"
+                        />
+                    </div>
+                </Link>
                 <div className="mt-3 text-center relative">
                     {/* Thông tin sản phẩm - xuất hiện trước */}
                     <div
@@ -51,7 +54,7 @@ const Card = ({ data, sizeImg }) => {
 
                     <div className="">
                         <button onClick={() => handleAddToCart(data)}
-                            className={`absolute left-0 top-[-15px] w-full py-3  border-2 text-sm font-semibold rounded-lg transition-all duration-500 z-10 hover:text-white hover:bg-black ${isHovered ? "opacity-100 translate-y-5" : "opacity-0 translate-y-0"
+                            className={`absolute left-0 top-[-15px] w-full py-3 border-2 text-sm font-semibold rounded-lg transition-all duration-500 z-10 hover:text-white hover:bg-black ${isHovered ? "opacity-100 translate-y-5" : "opacity-0 translate-y-0"
                                 }`}
                         >
                             Thêm vào giỏ hàng

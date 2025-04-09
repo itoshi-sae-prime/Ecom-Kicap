@@ -7,7 +7,9 @@ import { MdOutlineLocalShipping } from "react-icons/md";
 import { PiShieldCheckFill } from "react-icons/pi";
 import { BsFillAwardFill } from "react-icons/bs";
 import TinTuc from "../../Components/Post/TinTuc";
+import { useParams } from "react-router-dom";
 const PDPage = () => {
+    const { id } = useParams();
     const [keycap, setKeycap] = useState([]);
     const [soluong, setSoluong] = useState(0);
     const [mota, setMota] = useState(false);
@@ -17,7 +19,7 @@ const PDPage = () => {
             try {
                 await axios({
                     method: 'GET',
-                    url: ``,
+                    url: `api/product/:id`,
                 }).then((res) => {
                     setKeycap(res.data);
                 }).catch((err) => {

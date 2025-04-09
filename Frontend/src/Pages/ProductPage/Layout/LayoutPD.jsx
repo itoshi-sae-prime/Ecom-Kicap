@@ -1,43 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
-import ReactPaginate from 'react-paginate';
-import axios from "axios";
-import Card from "../../Components/Card/Card";
-export const KCPage = (props) => {
-    const [loading, setLoading] = useState(true);
+import { Outlet } from "react-router-dom";
+const LayoutPD = () => {
     const [opens, setOpens] = useState({})
-    const [picture, setPicture] = useState([]);
-    const [pageNumber, setPageNumber] = useState(0);
-    const [count, setCount] = useState(1);
-    useEffect(() => {
-        getPicture();
-    }, []);
-    const getPicture = async () => {
-        await axios({
-            method: 'GET',
-            url: `/keycap_bo`
-        }).then((res) => {
-            console.log(res.data);
-            setPicture(res.data);
-            setPageNumber(5);
-            setLoading(true);
-        }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            setLoading(false); // Kết thúc loading
-        });
-    };
+    const [selectedOption, setSelectedOption] = useState("");
 
-    const handlePageClick = (event) => {
-        console.log("event.selected", event)
-        getPicture(event.selected + 1);
-    };
-
-    const handleMuaHang = () => {
-        alert(`Mua hàng thành công`);
-        setCount(count + 1);
-        console.log(count);
+    const handleFilterChange = (value) => {
+        setSelectedOption(value);
+        console.log("Đã chọn:", value); // Kiểm tra giá trị lọc
     };
     const handleToggle = (key) => {
         setOpens(prev => {
@@ -49,18 +20,18 @@ export const KCPage = (props) => {
     }
 
     return (
-        <div>
+        <div className="container mx-auto">
             <div className="w-full h-[350px] grid place-items-center mb-[20px] pt-[7px]">
                 <img className="w-full h-[350px] object-cover" src="https://bizweb.dktcdn.net/100/436/596/collections/n40pqa2hhof61.jpg?v=1631205634610" alt="" />
-                <div className="w-[1140px] absolute text-white">
+                <div className="w-[100%] absolute text-white container">
                     <h1 className="text-[26px] font-medium leading-[28px] tracking-widest mb-[10px]">KEYCAP BỘ</h1>
                     <p className="">
                         Những bộ keycaps độc đáo nhất giúp chiếc bàn phím của bạn trở lên khác biệt và đầy cảm hứng.</p>
                 </div>
             </div>
-            <div>
-                <div className="w-[1140px] mx-auto flex gap-x-[10px]">
-                    <div className="w-[25%] h-auto  rounded-[10px] p-[10px]">
+            <div className="container">
+                <div className="w-[100%] mx-auto flex gap-x-[10px]">
+                    <div className="lg:w-[25%] hidden lg:block h-auto rounded-[10px] p-[10px]">
                         <h1 className="text-[20px] tracking-[2px] font-medium leading-[30px] uppercase mb-[15px] mt-[5px]">Danh Mục</h1>
                         <ul className="border-b-2 pb-[25px]">
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]"><a href="https://example.com">Trang chủ</a></li>
@@ -132,28 +103,28 @@ export const KCPage = (props) => {
                         <h1 className="text-[18px] tracking-[2px] font-normal leading-[30px] mt-[15px] mb-[15px]">Tags</h1>
                         <ul>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="cherry" />
                                 <a href="https://example.com">cherry</a></li>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="sa" />
                                 <a href="https://example.com">sa</a></li>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="oem" />
                                 <a href="https://example.com">oem</a></li>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="asa" />
                                 <a href="https://example.com">asa</a></li>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="dyesub" />
                                 <a href="https://example.com">dyesub</a></li>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="doubleshot" />
                                 <a href="https://example.com">doubleshot</a></li>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="pbt" />
                                 <a href="https://example.com">pbt</a></li>
                             <li className="text-[14px] tracking-[2px] font-normal leading-[30px]">
-                                <input className="mr-[7px]" type="checkbox" />
+                                <input className="mr-[7px]" type="checkbox" name="tags" value="abs" />
                                 <a href="https://example.com">abs</a></li>
                         </ul>
                         <h1 className="text-[18px] tracking-[2px] font-normal leading-[30px] mt-[15px] mb-[15px]">Thương hiệu</h1>
@@ -220,72 +191,38 @@ export const KCPage = (props) => {
                                 <a href="https://example.com">Kicap bộ</a></li>
                         </ul>
                     </div>
-                    <div className="w-[75%] h-auto  rounded-[10px] p-[10px] mt-[5px]">
-                        <div className="flex justify-start items-center">
-                            <div className="pr-[20px]">Xếp theo: </div>
-                            <div className="flex pr-[10px]">
-                                <input type="radio" />
-                                <div className="pl-[5px]">Tên A-Z</div>
-                            </div>
-                            <div className="flex px-[10px]">
-                                <input type="radio" />
-                                <div className="pl-[5px]">Tên Z-A</div>
-                            </div>
-                            <div className="flex px-[10px]">
-                                <input type="radio" />
-                                <div className="pl-[5px]">Hàng mới</div>
-                            </div>
-                            <div className="flex px-[10px]">
-                                <input type="radio" />
-                                <div className="pl-[5px]">Giá thấp tới cao</div>
-                            </div>
-                            <div className="flex px-[10px]">
-                                <input type="radio" />
-                                <div className="pl-[5px]">Giá cao xuống thấp</div>
+                    <div className="xl:w-[75%] w-[100%] h-auto rounded-[10px] p-[10px] mt-[5px]">
+                        <div className="flex flex-wrap justify-start items-center text-sm sm:text-base xl:text-[15px]">
+                            <div className="sm:block ml-[5px] font-semibold">Xếp theo:</div>
+                            <div className="flex flex-wrap gap-2 sm:gap-3 pt-[10px]">
+                                {[
+                                    { value: "az", label: "Tên A-Z" },
+                                    { value: "za", label: "Tên Z-A" },
+                                    { value: "new", label: "Hàng mới" },
+                                    { value: "low-high", label: "Giá thấp tới cao" },
+                                    { value: "high-low", label: "Giá cao xuống thấp" },
+                                ].map((option) => (
+                                    <label key={option.value} className="flex items-center gap-1 px-[5px] sm:px-[10px] cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="sort"
+                                            value={option.value}
+                                            checked={selectedOption === option.value}
+                                            onChange={(e) => handleFilterChange(e.target.value)}
+                                            className="cursor-pointer"
+                                        />
+                                        <div className="text-xs sm:text-sm">{option.label}</div>
+                                    </label>
+                                ))}
                             </div>
                         </div>
-                        <div className="w-full h-full mt-[20px]">
-                            {
-                                loading ? <div className="text-center">
-                                    <div className="flex justify-center items-center h-40">
-                                        <div className="animate-spin rounded-full h-20 w-20 border-[1em] border-t-transparent  border-gray-900">
-                                        </div>
-                                    </div>
-                                </div> : <div className="grid grid-cols-3 gap-x-[7px] gap-y-[10px] ">
-                                    {
-                                        picture.map((item, ind) => (
-                                            <Card key={ind} data={item} sizeImg={"w-full h-[270px]"} />
-                                        ))
-                                    }
-                                </div>
-                            }
-
-                            {/* <div className="flex justify-center items-center mt-[10px]">
-                                <ReactPaginate
-                                    nextLabel="next >"
-                                    onPageChange={handlePageClick}
-                                    pageRangeDisplayed={3}
-                                    marginPagesDisplayed={2}
-                                    pageCount={pageNumber}
-                                    previousLabel="< previous"
-                                    pageClassName="page-item"
-                                    pageLinkClassName="page-link"
-                                    previousClassName="page-item"
-                                    previousLinkClassName="page-link"
-                                    nextClassName="page-item"
-                                    nextLinkClassName="page-link"
-                                    breakLabel="..."
-                                    breakClassName="page-item"
-                                    breakLinkClassName="page-link"
-                                    containerClassName="pagination"
-                                    activeClassName="active"
-                                    style={{ color: "black", cursor: "pointer" }}
-                                />
-                            </div> */}
+                        <div className="sm:container w-full h-full mt-[20px]">
+                            <Outlet context={{ selectedOption }} />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     )
-}
+};
+export default LayoutPD;

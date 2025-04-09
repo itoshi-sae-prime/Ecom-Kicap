@@ -7,23 +7,16 @@ const dotenv = require("dotenv");
 const cheerio = require("cheerio");
 const nodeMailer = require("nodemailer");
 const Product = require("./model/product.model");
+const productRouter = require('./routes/product.routes')
+const postRouter = require('./routes/post.router');
 require('dotenv').config();
 const app = express();
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-//Routes
-// app.get("/api/product", productRouter);
-// app.get("/api/product/:id", productRouter);
-
-const url_index = "https://kicap.vn/";
-const url_keycao_bo = "https://kicap.vn/keycap-bo";
 mongoose.connect("mongodb+srv://admin123:050825%21%40%23%24Tt@kicapdb.sxbgl.mongodb.net/?retryWrites=true&w=majority&appName=KicapDb")
     .then(() => console.log("✅ Kết nối MongoDB thành công!"))
     .catch(err => console.error("❌ Lỗi kết nối:", err));;
-// const urlCharater = "https://kimetsu-no-yaiba.fandom.com/wiki/"
-//Set up
 
 app.use(bodyParse.json({ limit: "50mb" }));
 app.use(cors());
@@ -35,92 +28,13 @@ app.use(
         parameterLimit: 50000,
     })
 );
-app.get("/v1", (req, resp) => {
-    const results = [];
-    const limit = Number(req.query.limit);
-    try {
-        axios(url_index).then((res) => {
-            const html = res.data;
-            const $ = cheerio.load(html);
 
-            $(".product-card", html).each(function () {
-                const images = $(this).find(".product-card__image > picture > source").map((i, el) => $(el).attr("srcset")).get();
-                const sold_out = $(this).find(".product-card__image > span.soldout").text().trim();
-                const sale_box = $(this).find(".sale-box").text().trim();
-                const name = $(this).find("h4.product-single__series").text().trim();
-                const title = $(this).find("h3.product-card__title").text().trim();
-                const price = $(this).find(".product-price > strong").text().trim();
-                const sale_price = $(this).find(".product-price > span").text().trim();
-                results.push({ images, sold_out, sale_box, name, title, price, sale_price });
-            });
-            if (limit && limit > 0) {
-                resp.status(200).json(results.slice(0, limit));
-            }
-            else {
-                resp.status(200).json(results);
-            }
-        })
-    }
-    catch {
-        resp.status(500).json(err);
-    }
-});
-app.get('/keycap_bo', (req, resp) => {
-    const results = [];
-    const limit = Number(req.query.limit);
-    try {
-        axios(url_keycao_bo).then((res) => {
-            const html = res.data;
-            const $ = cheerio.load(html);
+app.use('/api/products', productRouter);
+app.use('/api/posts', postRouter);
 
-            $(".product-card", html).each(function () {
-                const images = $(this).find(".product-card__image > picture > source").map((i, el) => $(el).attr("srcset")).get();
-                // const sold_out = $(this).find(".product-card__image > span.soldout").text().trim();
-                // const sale_box = $(this).find(".sale-box").text().trim();
-                const name = $(this).find("h4.product-single__series").text().trim();
-                const title = $(this).find("h3.product-card__title").text().trim();
-                const price = $(this).find(".product-price > strong").text().trim();
-                const sale_price = $(this).find(".product-price > span").text().trim();
-                results.push({ images, name, title, price, sale_price });
-            });
-            if (limit && limit > 0) {
-                resp.status(200).json(results.slice(0, limit));
-            }
-            else {
-                resp.status(200).json(results);
-            }
-        })
-    }
-    catch {
-        resp.status(500).json(err);
-    }
-});
-app.get("/post", (req, resp) => {
-    const results = [];
-    const limit = Number(req.query.limit);
-    try {
-        axios(url_index).then((res) => {
-            const html = res.data;
-            const $ = cheerio.load(html);
+// app.get("/post", (req, resp) => {
 
-            $(".news-items", html).each(function () {
-                const images = $(this).find(".evo-article-image > img").attr("data-lazyload");
-                const title = $(this).find("h3").text().trim();
-                const content = $(this).find("p").text().trim();
-                results.push({ images, title, content });
-            });
-            if (limit && limit > 0) {
-                resp.status(200).json(results.slice(0, limit));
-            }
-            else {
-                resp.status(200).json(results);
-            }
-        })
-    }
-    catch {
-        resp.status(500).json(err);
-    }
-});
+// });
 app.get("/api/product", async (req, resp) => {
     try {
         const products = await Product.find();
@@ -153,10 +67,11 @@ app.post("/api/OrderKicap", async (req, resp) => {
             },
         });
         let cartHtml = req.body.cart.cart.map((item, index) => {
+
             return `
                 <tr key=${index}>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;>
-                        <img src="${item.images[0]}" alt="${item.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 5px;" />
+                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                        <img src="http:${item.images[0]}" alt="${item.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 5px;" />
                     </td>
                     <td style="padding: 10px; border: 1px solid #ddd;">${item.title}</td>
                     <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${item.quantity}</td>
@@ -195,8 +110,8 @@ app.post("/api/OrderKicap", async (req, resp) => {
                     </tbody>
                      <tfoot>
                     <tr>
-                        <td colspan="4" style="padding: 10px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Tổng tiền:</td>
-                        <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-weight: bold; color: red;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Tổng tiền:</td>
+                        <td colspan="2" style="padding: 10px; border: 1px solid #ddd; text-align: center; font-weight: bold; color: red;">
                             ${req.body.cart.total}.000 VNĐ
                         </td>
                     </tr>
@@ -210,6 +125,7 @@ app.post("/api/OrderKicap", async (req, resp) => {
         };
         await transporter.sendMail(message);
         return resp.status(200).json({ message: "Email đã gửi thành công!" });
+
         // transporter.sendMail(message, (err, info) => {
         //     if (err) {
         //         console.log("error in sending email", err);
@@ -235,12 +151,10 @@ app.post("/api/product", async (req, resp) => {
         const product = await Product.create(req.body);
         resp.status(201).json(product);
     } catch (err) {
-        resp.status(500).json(err); x
+        resp.status(500).json(err);
     }
     resp.status(200).json(req.body);
 });
-
-
 
 const port = 8000;
 app.listen(8000, () => {

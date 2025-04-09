@@ -28,6 +28,7 @@ const Checkout = () => {
         e.preventDefault();
         try {
             const response = await axios.post("/api/OrderKicap", formData);
+            console.log(formData);
             console.log(response.data);
             alert("Email sent successfully!");
         }
@@ -44,17 +45,46 @@ const Checkout = () => {
         }));
     }, [cart]);
     return (
-        <div className="w-full h-full flex container">
-            <div className="w-[70%] gap-x-2 px-3 py-4">
-                <div className="text-2xl font-semibold text-blue-500 px-5">Kicap</div>
-                <div className="flex">
-                    <div className="w-[50%] flex px-5">
+        <div className="w-full lg:flex sm: container">
+            <div className="lg:w-[70%] gap-x-2 px-3 py-4">
+                <div className="text-2xl font-semibold text-blue-500 px-4 text-left w-full hidden lg:block">
+                    Kicap
+                </div>
+                <div className="text-3xl font-semibold text-blue-500 px-4 text-center w-full lg:hidden pb-2 block border-b-2">
+                    Kicap
+                </div>
+                <div className="lg:hidden block">
+                    <div className="pt-2 pb-3 text-[20px] font-semibold border-b-2">Đơn hàng của bạn
+                    </div>
+
+                    <div className="pt-2 pb-3 border-b-2">
+                        {
+                            cart.cart.length > 0 ? cart.cart.map((item, ind) => (
+                                <div className="flex justify-between items-center py-2" key={ind}>
+                                    <div className="flex items-center gap-x-2 text-[13px]">
+                                        <img src={item.images} alt="" className='h-[50px] w-[50px]' />
+                                        <div className="truncate w-[200px]">{item.title}</div>
+                                        <div className="">
+                                            <div className="">{item.price}</div>
+                                            <div className="">SL: <strong>{item.quantity} </strong></div>
+                                        </div>
+                                    </div>
+                                    <div className="text-[15px]">  {parseInt(item.price.replace(/[^0-9]/g, "")) / 1000 * item.quantity}.000đ</div>
+                                </div>
+                            )) : <div className="py-[0.75rem] px-[1.25rem] bg-blue-800 text-[12px] font-semibold text-white text-center animate-pulse">
+                                Giỏ hàng của bạn đang trống!
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div className="lg:flex max-w-[100%] lg:px-5">
+                    <div className="lg:w-[50%] w-[100%] flex">
                         <div className="mb-2 bg-white rounded-lg">
                             <div className="text-sm font-medium text-gray-700 flex justify-between items-center py-3">
                                 <span className="text-[18px] font-semibold">Thông tin nhận hàng</span>
-                                <a href="https://tailwindcss.com/docs/line-height" className="text-blue-500 hover:text-blue-700 underline transition duration-200">
+                                <Link to="/login" className="text-blue-500 hover:text-blue-700 underline transition duration-200">
                                     Đăng nhập
-                                </a>
+                                </Link>
                             </div>
                             <div className="space-y-4 ">
                                 <input type="email" placeholder="Email (tùy chọn)" value={formData.email} onChange={handleChange} name='email'
@@ -81,7 +111,7 @@ const Checkout = () => {
                         </div>
 
                     </div>
-                    <div className="w-[50%] px-3 py-2">
+                    <div className="lg:w-[50%] w-[100%] lg:px-5">
                         <div className="text-sm font-medium text-gray-700 flex justify-start py-2">
                             <span className="text-[18px] font-semibold">Vận chuyển</span>
                         </div>
@@ -177,35 +207,37 @@ const Checkout = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-end items-center pt-3 border-t-2 border-gray-300 space-x-4 text-[15px]">
+                <div className="hidden justify-end items-center pt-3 border-t-2 border-gray-300 space-x-4 text-[15px] lg:flex">
                     <Link to="/chinh-sach-doi-tra" className=" text-blue-500 hover:underline transition duration-200">Chính sách hoàn trả</Link>
                     <Link to="/chinh-sach-bao-hanh" className=" text-blue-500 hover:underline transition duration-200">Chính sách bảo mật</Link>
                     <Link to="/gioi-thieu" className=" text-blue-500 hover:underline transition duration-200">Điều khoản sử dụng</Link>
                 </div>
             </div>
-            <div className="w-[30%] bg-slate-100 min-h-[100vh] px-4 py-2">
+            <div className="lg:w-[30%] bg-slate-100 lg:min-h-[100vh] px-4 py-2">
 
-                <div className="pt-2 pb-3 text-[20px] font-semibold border-b-2">Đơn hàng của bạn
-                </div>
+                <div className="lg:block hidden">
+                    <div className="pt-2 pb-3 text-[20px] font-semibold border-b-2">Đơn hàng của bạn
+                    </div>
 
-                <div className="pt-2 pb-3 border-b-2">
-                    {
-                        cart.cart.length > 0 ? cart.cart.map((item, ind) => (
-                            <div className="flex justify-between items-center py-2" key={ind}>
-                                <div className="flex items-center gap-x-2 text-[13px]">
-                                    <img src={item.images} alt="" className='h-[50px] w-[50px]' />
-                                    <div className="truncate w-[200px]">{item.title}</div>
-                                    <div className="">
-                                        <div className="">{item.price}</div>
-                                        <div className="">SL: <strong>{item.quantity} </strong></div>
+                    <div className="pt-2 pb-3 border-b-2">
+                        {
+                            cart.cart.length > 0 ? cart.cart.map((item, ind) => (
+                                <div className="flex justify-between items-center py-2" key={ind}>
+                                    <div className="flex items-center gap-x-2 text-[13px]">
+                                        <img src={item.images} alt="" className='h-[50px] w-[50px]' />
+                                        <div className="truncate w-[200px]">{item.title}</div>
+                                        <div className="">
+                                            <div className="">{item.price}</div>
+                                            <div className="">SL: <strong>{item.quantity} </strong></div>
+                                        </div>
                                     </div>
+                                    <div className="text-[15px]">  {parseInt(item.price.replace(/[^0-9]/g, "")) / 1000 * item.quantity}.000đ</div>
                                 </div>
-                                <div className="text-[15px]">  {parseInt(item.price.replace(/[^0-9]/g, "")) / 1000 * item.quantity}.000đ</div>
+                            )) : <div className="py-[0.75rem] px-[1.25rem] bg-blue-800 text-[12px] font-semibold text-white text-center animate-pulse">
+                                Giỏ hàng của bạn đang trống!
                             </div>
-                        )) : <div className="py-[0.75rem] px-[1.25rem] bg-blue-800 text-[12px] font-semibold text-white text-center animate-pulse">
-                            Giỏ hàng của bạn đang trống!
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
 
                 <div className="pt-2 pb-2 border-b-2 text-[14px]">
@@ -243,6 +275,11 @@ const Checkout = () => {
                         <Link to="/cart" className="text-blue-500 hover:underline transition duration-200">Quay lại giỏ hàng</Link>
                         <button className='py-3 bg-blue-600 hover:bg-blue-800 w-[40%] text-white font-bold rounded-lg' onClick={handleSubmit}>Đặt hàng</button>
                     </div>
+                </div>
+                <div className="flex justify-center items-center py-3 border-t-2 border-gray-300 space-x-4 text-[12px] lg:text-[15px] lg:hidden">
+                    <Link to="/chinh-sach-doi-tra" className=" text-blue-500 hover:underline transition duration-200">Chính sách hoàn trả</Link>
+                    <Link to="/chinh-sach-bao-hanh" className=" text-blue-500 hover:underline transition duration-200">Chính sách bảo mật</Link>
+                    <Link to="/gioi-thieu" className=" text-blue-500 hover:underline transition duration-200">Điều khoản sử dụng</Link>
                 </div>
             </div>
         </div >

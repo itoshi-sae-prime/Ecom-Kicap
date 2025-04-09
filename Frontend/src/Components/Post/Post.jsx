@@ -28,7 +28,6 @@ const Post = () => {
         <>
             <div className="text-center text-[25px] tracking-[7px] py-[30px]">SẢN PHẨM <strong>MỚI</strong></div>
             <ListPost data={producpic.slice(4, 8)} title="Xem tất cả, sản phẩm mới" />
-
             <div className="text-center text-[25px] tracking-[7px] py-[40px] uppercase">Bàn phím cơ <strong>Custom</strong></div>
             <ListPost data={producpic.slice(9, 16)} title="Xem tất cả, bàn phím cơ custom" />
             <div className="text-center text-[25px] tracking-[7px] py-[40px] uppercase">Bàn phím cơ <strong>KEYCAP SA OSIRIS</strong></div>

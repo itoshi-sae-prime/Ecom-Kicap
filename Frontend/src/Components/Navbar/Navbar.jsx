@@ -1,74 +1,43 @@
 
-import { BrowserRouter, Router, Route, Link, NavLink } from "react-router-dom";
-import React, { Component } from "react";
-import Slider from "react-slick";
-
-const Data1 = [
-    {
-        id: 1,
-        name: "Trang Chủ",
-    },
-    {
-        id: 1,
-        name: "Keycap bộ",
-    },
-    {
-        id: 1,
-        name: "Mods phím",
-    },
-    {
-        id: 1,
-        name: "Chuột",
-    },
-    {
-        id: 1,
-        name: "Sản phẩm ",
-    },
-    {
-        id: 1,
-        name: "Blog",
-    },
-    {
-        id: 1,
-        name: "Về Kicap",
-    },
-
-]
+import { Link } from "react-router-dom";
+import React from "react";
+import { Data1 } from '../../data/Navbar'
 const Navbar = () => {
+    console.log(Data1);
     return (
         <div className="">
             <ul className="flex justify-center items-center tracking-[2px] mt-[20px]">
                 <li className="px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold hover:text-gray-400"><Link to="/#">Trang Chủ</Link></li>
-                <li className="item-navbar py-[7px] px-[22px] mx-[15px] text-[14px] uppercase font-semibold relative hover:text-gray-400">
-                    <Link to="/keycap-bo">Keycap bộ</Link>
+                <li className="item-navbar py-[7px] lg:px-[15px] xl:px-[22px]  xl:mx-[15px] text-[14px] uppercase font-semibold relative hover:text-gray-400">
+                    <Link to="/keycap_bo">Keycap bộ</Link>
                     <ul className="navbar absolute bg-white w-[220px] left-[-10px] top-9 z-20  px-[20px] py-[15px] rounded-lg shadow-2xl transition-all duration-300 ease-in-out hover:shadow-2xl ">
                         <div className="grid grid-cols-1 gap-y-5">
                             <li className="text-[12px] uppercase font-semibold text-gray-700 hover:text-black hover:font-bold transition duration-200 ease-in-out ">
-                                <a href="#">Keycap Cherry</a>
+                                <Link to='/blog'>Keycap Cherry</Link>
                             </li>
                             <li className="text-[12px] uppercase font-semibold text-gray-700 hover:text-black hover:font-bold transition duration-200 ease-in-out">
-                                <a href="#">Keycap MOA</a>
+                                <Link to='/blog'>Keycap MOA</Link>
                             </li>
                             <li className="text-[12px] uppercase font-semibold text-gray-700 hover:text-black hover:font-bold transition duration-200 ease-in-out">
-                                <a href="#">Keycap xuyên led</a>
+                                <Link to='/blog'>Keycap xuyên led</Link>
                             </li>
                             <li className="text-[12px] uppercase font-semibold text-gray-700 hover:text-black hover:font-bold transition duration-200 ease-in-out">
-                                <a href="#">Keycap SA</a>
+                                <Link to='/blog'>Keycap SA</Link>
                             </li>
                             <li className="text-[12px] uppercase font-semibold text-gray-700 hover:text-black hover:font-bold transition duration-200 ease-in-out">
-                                <a href="#">Keycap XDA</a>
+                                <Link to='/blog'>Keycap XDA</Link>
                             </li>
                             <li className="text-[12px] uppercase font-semibold text-gray-700 hover:text-black hover:font-bold transition duration-200 ease-in-out">
-                                <a href="#">Keycap OEM</a>
+                                <Link to='/blog'>Keycap OEM</Link>
                             </li>
                         </div>
                     </ul>
                 </li>
-                <li className="px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold hover:text-gray-400"><Link to="/keycap-bo">MODS PHÍM</Link></li>
-                <li className="px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold hover:text-gray-400"><Link to="/keycap-bo">PRE-ORDER</Link></li>
-                <li className="px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold hover:text-gray-400"><Link to="/keycap-bo">CHUỘT</Link></li>
+                <li className="px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold hover:text-gray-400"><Link to="/banphimco">Bàn Phím Cơ</Link></li>
+                <li className="px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold hover:text-gray-400"><Link to="/modsphim">MODS PHÍM</Link></li>
+                <li className="px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold hover:text-gray-400"><Link to="/chuot">CHUỘT</Link></li>
                 <li className="item-navbar py-[7px] px-[22px] mx-[10px] text-[14px] uppercase font-semibold relative  z-[999px]">
-                    <Link to="/keycap-bo">SẢN PHẨM</Link>
+                    <Link to="/sanpham/all">SẢN PHẨM</Link>
                     <div className="w-full">
                         <ul className="navbar w-[1100px] max-h-[600px] absolute left-[-740px] mt-[5px] px-[20px] py-[10px] none z-20 rounded-lg shadow-xl transition-all duration-300 ease-in-out hover:shadow-2xl bg-white">
                             <div className="grid grid-cols-3 gap-x-3 hover:text-gray-800">
@@ -115,8 +84,8 @@ const Navbar = () => {
                     <Link to="/blog">Blog</Link>
                 </li>
                 <li className="item-navbar px-[22px] py-[7px] mx-[10px] text-[14px] uppercase font-semibold relative hover:text-gray-400">
-                    <a href="#">Về Kicap</a>
-                    <ul className="navbar absolute w-[220px] left-[-10px] shadow-lg z-20 mt-[10px]">
+                    <a href="/gioi-thieu">Về Kicap</a>
+                    <ul className="navbar absolute w-[220px] left-[-10px] shadow-lg z-20 mt-[5px]">
                         <div className="grid grid-cols-1 gap-2">
                             <li className="text-[12px] p-[15px] uppercase font-semibold  hover:text-black">
                                 <Link to="/gioi-thieu">Giới thiệu</Link>

@@ -15,8 +15,8 @@ const CartPage = () => {
     };
 
     return (
-        <div className="container mx-auto p-5">
-            <h2 className="text-2xl font-bold mb-4">🛒 Giỏ Hàng</h2>
+        <div className="container mx-auto p-">
+            <h2 className="text-2xl font-bold mb-4 bg-white mt-[20px]">🛒 Giỏ Hàng</h2>
 
             {cart.cart.length === 0 ? (
                 <div className="flex flex-col items-center justify-center text-center p-6 bg-gray-100 rounded-lg shadow-md">
@@ -30,38 +30,57 @@ const CartPage = () => {
                     </Link>
                 </div>
             ) : (
-                <div className="bg-white p-4 shadow-lg rounded-lg">
-                    <div className="flex max-w-[100%]">
-                        <div className="w-[75%]">
-                            <div className="w-[100%]">
-                                {
-                                    cart.cart.map((item, ind) => (
-                                        <div key={ind} className="flex items-center">
-                                            <div className="p-3 flex items-center">
-                                                <img src={item.images} alt={item.name} className="w-40 h-40 object-cover rounded mr-3" />
-
-                                            </div>
-                                            <div className="pl-[40px] w-[40%]">
-                                                <div className=" truncate">{item.title}</div>
-                                            </div>
-                                            <div className="p-3 text-green-500 font-bold">{item.price.toLocaleString()}</div>
-                                            <div className="w-[30%] flex items-center justify-center p-2 text-[12px]">
-                                                <button className="w-8 h-8 flex items-center justify-center border-1 transition" onClick={() => handleSubstract(item)}>
-                                                    −
-                                                </button>
-                                                <div className="w-12 h-8 flex justify-center items-center text-md font-semibold text-gray-700 bg-white border border-gray-300" setLocalQuantity={item.quantity}>
-                                                    {item.quantity}
-                                                </div>
-                                                <button className="w-8 h-8 flex items-center justify-center border-1 transition" onClick={() => handlePlus(item)}>
-                                                    +
-                                                </button>
-                                            </div>
-
+                <div className="bg-white xl:p-4 p-2 shadow-2xl rounded-lg border-2">
+                    <div className="xl:flex block max-w-[100%]">
+                        <div className="xl:w-[75%] w-full">
+                            <div className="w-full">
+                                {cart.cart.map((item, ind) => (
+                                    <div key={ind} className="flex justify-between items-center border-b py-4">
+                                        {/* Hình ảnh sản phẩm */}
+                                        <div className="xl:p-3 flex items-center w-[25%]">
+                                            <img
+                                                src={item.images}
+                                                alt={item.name}
+                                                className="w-30 h-20 sm:w-50 sm:h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 object-cover rounded"
+                                            />
                                         </div>
-                                    ))}
+
+                                        <div className="xl:flex justify-between items-center w-[50%]">
+                                            {/* Tên sản phẩm */}
+                                            <div className="pl-4  truncate ">
+                                                <div className="text-sm sm:text-base font-semibold">{item.title}</div>
+                                            </div>
+
+                                            {/* Giá tiền */}
+                                            <div className="p-3 w-[25%] text-green-500 font-bold text-sm sm:text-lg">
+                                                {item.price.toLocaleString()}
+                                            </div>
+                                        </div>
+
+                                        {/* Nút tăng giảm số lượng */}
+                                        <div className="w-[25%] flex items-center justify-center p-2 text-sm sm:text-md">
+                                            <button
+                                                className="w-8 h-8 flex items-center justify-center border border-gray-400 rounded transition hover:bg-gray-200"
+                                                onClick={() => handleSubstract(item)}
+                                            >
+                                                −
+                                            </button>
+                                            <div className="w-12 h-8 flex justify-center items-center text-md font-semibold text-gray-700 bg-white border border-gray-300 mx-2">
+                                                {item.quantity}
+                                            </div>
+                                            <button
+                                                className="w-8 h-8 flex items-center justify-center border border-gray-400 rounded transition hover:bg-gray-200"
+                                                onClick={() => handlePlus(item)}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className="w-[25%]">
+
+                        <div className="xl:w-[25%] w-full">
                             <div className="max-w-[100%] p-3">
                                 <div className="flex justify-between items-center py-2">
                                     <span className="font-semibold">
